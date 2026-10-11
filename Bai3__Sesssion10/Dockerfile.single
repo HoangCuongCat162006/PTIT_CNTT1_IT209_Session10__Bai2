@@ -1,0 +1,21 @@
+# ==============================================================================
+# Dockerfile.single: Single-stage build truyen thong (Chua toi uu)
+# ==============================================================================
+# Su dung Base Image day du (node:18 ~ 1.1GB gom build tools, Python, gcc...)
+FROM node:18
+
+# Thu muc lam viec
+WORKDIR /app
+
+# Copy toan bo ma nguon va file cau hinh cung luc (Khong tan dung duoc Layer Caching cho dependencies)
+COPY . .
+
+# Cai dat toan bo dependencies gom ca devDependencies (eslint, jest, nodemon...)
+# Khong su dung clean cache
+RUN npm install
+
+# Expose port
+EXPOSE 3000
+
+# Chay ung dung
+CMD ["node", "server.js"]
